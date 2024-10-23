@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Popup from "./UI/Popup"
-const AddNoteForm = ({onClose, onAddNote}) => {
+
+const AddNoteForm = ({ onClose }) => {
     const initialData = {
         title: "",
         slug: "",
@@ -41,7 +42,7 @@ const AddNoteForm = ({onClose, onAddNote}) => {
         };
         await axios.post('https://react-refresher-e0f10-default-rtdb.firebaseio.com/notes/data.json', data)
             .then(function (response) {
-                onAddNote(response.data);
+                console.log(response.data);
                 setFormData(initialData);
             }).catch((error) => {
                 console.log(error)
