@@ -56,7 +56,7 @@ const AddNoteForm = ({ onClose }) => {
                 <div className="col-span-1 w-full space-y-2">
                 <label className="text-gray-800">Title:</label>
                 <input type="text" id="title" name="title"
-                placeholder="Write your note's title..." aria-label="Enter your notes's title"
+                placeholder="Write your note's title..." aria-labelledby="Enter your notes's title"
                 value={formData.title}
                 onChange={onChange}
                 required
@@ -65,7 +65,7 @@ const AddNoteForm = ({ onClose }) => {
                 <div className="col-span-1 w-full space-y-2">
                 <label className="text-gray-800">Slug:</label>
                 <input type="text" id="slug" name="slug"
-                placeholder="No Need to do anything, just wait..." aria-label="No Need to do anything, just wait"
+                placeholder="No Need to do anything, just wait..." aria-labelledby="No Need to do anything, just wait"
                 value={formData.slug}
                 onChange={onChange}
                 required
@@ -74,7 +74,7 @@ const AddNoteForm = ({ onClose }) => {
                 <div className="col-span-2 w-full space-y-2">
                 <label className="text-gray-800">Date:</label>
                 <input type="text" id="date" name="date"
-                placeholder="Note's date..." aria-label="Enter your notes's date"
+                placeholder="Note's date..." aria-labelledby="Enter your notes's date"
                 value={formData.date}
                 disabled
                 onChange={onChange}
@@ -83,7 +83,7 @@ const AddNoteForm = ({ onClose }) => {
                 </div>
                 <div class="w-full col-span-2 space-y-2">
                 <label className="text-gray-800">Content:</label>
-                <textarea id="content" name="content" rows="10" aria-label="Type out your content"
+                <textarea id="content" name="content" rows="10" aria-labelledby="Type out your content"
                 placeholder="What's your note about?" 
                 value={formData.content}
                 onChange={onChange}

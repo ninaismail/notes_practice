@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import AddNoteForm from "./AddNoteForm";
+import { AuthContext } from "../context/AuthContext";
 
 const MyDay = () => {
+    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
     const [open, setOpen] = useState(null);
     const [notes, setNotes] = useState([]);
     console.log(notes)
@@ -21,6 +24,8 @@ const MyDay = () => {
     
     return (
         <section className="pt-40 2xl:w-8/12 w-10/12 mx-auto">
+            {isLoggedIn === true ?
+            <>
             <h1 className="lg:text-4xlmd:text-3xl sm:text-2xl text-xl font-bold tracking-wider text-gray-900 mb-6">My Notes for the day!</h1>
             <div className="grid grid-cols-4 gap-4">
                 <button
@@ -55,6 +60,12 @@ const MyDay = () => {
             ) : (
                 ""
             )}
+            </>
+            : 
+            <h1 className="lg:text-4xlmd:text-3xl sm:text-2xl text-xl font-bold tracking-wider text-gray-900 mb-6">Please Log in</h1>
+        }
+
+            
         </section>
     );
 };

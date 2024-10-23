@@ -6,6 +6,7 @@ import {
   import Loading from "./components/UI/Loading";
   import AboutPage from "./pages/AboutPage";
   import RootLayout from "./layouts/RootLayout"; // Import the RootLayout
+  import { AuthContextProvider } from "./context/AuthContext";
   
   const router = createBrowserRouter([
     {
@@ -26,11 +27,13 @@ import {
   
   const App = () => {
     return (
+      <AuthContextProvider>
       <RouterProvider
         router={router}
         fallbackElement={<Loading />
-        }
-      />
+        }        
+        />
+      </AuthContextProvider>
     );
   };
   
