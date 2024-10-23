@@ -13,7 +13,7 @@ export default function Navbar() {
     setIsLoggedIn(!isLoggedIn)
   }
   return (
-<header className="fixed left-1/2 transform -translate-x-1/2 top-4 h-[67px] flex items-center justify-between z-[9] 2xl:w-8/12 rounded-full w-10/12 mx-auto px-6 bg-purple-100/30 border-white">
+<header className="fixed left-1/2 transform -translate-x-1/2 top-4 h-[67px] flex items-center justify-between gap-3 z-[9] 2xl:w-8/12 rounded-full w-10/12 mx-auto px-6 bg-purple-100/30 border-white">
   <ul className="items-center w-8/12 h-full gap-6 flex">
     {Array.isArray(navLinks) &&
       navLinks.map((item, index) => (
