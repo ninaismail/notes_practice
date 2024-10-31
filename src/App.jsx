@@ -5,7 +5,7 @@ import {
   import HomePage from "./pages/HomePage";
   import Loading from "./components/UI/Loading";
   import AboutPage from "./pages/AboutPage";
-  import RootLayout from "./layouts/RootLayout"; // Import the RootLayout
+  import RootLayout from "./layouts/RootLayout";
   import { AuthContextProvider } from "./context/AuthContext";
   
   const router = createBrowserRouter([
@@ -27,13 +27,15 @@ import {
   
   const App = () => {
     return (
-      <AuthContextProvider>
-      <RouterProvider
-        router={router}
-        fallbackElement={<Loading />
-        }        
-        />
-      </AuthContextProvider>
+      <main className="dark:bg-black min-h-screen">
+        <AuthContextProvider>
+        <RouterProvider
+          router={router}
+          fallbackElement={<Loading />
+          }        
+          />
+          </AuthContextProvider>
+      </main>
     );
   };
   

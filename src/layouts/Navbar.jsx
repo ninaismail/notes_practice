@@ -31,7 +31,7 @@ export default function Navbar() {
   </ul>
   <button aria-label="send your content"
     onClick={toggleLogin}
-    class="cursor-pointer w-fit text-nowrap relative z-[2] col-span-2 px-4 py-3 text-gray-800 font-[400] text-center rounded-[8px] shadow-sm bg-blue-200 hover:brightness-125 transition-all duration-400">
+    className="cursor-pointer w-fit text-nowrap relative z-[2] col-span-2 px-4 py-3 text-gray-800 font-[400] text-center rounded-[8px] shadow-sm bg-blue-200 hover:brightness-125 transition-all duration-400">
     {isLoggedIn === true ?  'Log out' : 'Log in'}
     </button>     
 </header>
