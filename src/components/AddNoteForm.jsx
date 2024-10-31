@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Popup from "./UI/Popup"
+import { NoteContext } from "../context/NotesContext";
 
 const AddNoteForm = ({ onClose }) => {
+    const {addedNote, setAddedNote} = useContext(NoteContext);
+
     const initialData = {
         title: "",
         slug: "",
@@ -35,15 +38,17 @@ const AddNoteForm = ({ onClose }) => {
 
         const axios = (await import("axios")).default;
         const data = {
-                title: formData.title,
-                slug: formData.slug,
-                date: formData.date,
-                content: formData.content,                
+            title: formData.title,
+            slug: formData.slug,
+            date: formData.date,
+            content: formData.content,                
         };
         await axios.post('https://react-refresher-e0f10-default-rtdb.firebaseio.com/notes/data.json', data)
             .then(function (response) {
                 console.log(response.data);
                 setFormData(initialData);
+                const fetchedNotes = Object.entries(response.data || {}).map(([id, note]) => ({ id, ...note }));
+                setAddedNote(fetchedNotes);
             }).catch((error) => {
                 console.log(error)
             })
@@ -81,7 +86,7 @@ const AddNoteForm = ({ onClose }) => {
                 required
                 className='block px-4 py-3 0 w-full rounded-lg text-gray-800 border border-gray-400 appearance-none outline-none focus:ring-0 focus:border-blue-200'/>          
                 </div>
-                <div class="w-full col-span-2 space-y-2">
+                <div className="w-full col-span-2 space-y-2">
                 <label className="text-gray-800">Content:</label>
                 <textarea id="content" name="content" rows="10" aria-labelledby="Type out your content"
                 placeholder="What's your note about?" 

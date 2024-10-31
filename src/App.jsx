@@ -7,6 +7,7 @@ import {
   import AboutPage from "./pages/AboutPage";
   import RootLayout from "./layouts/RootLayout";
   import { AuthContextProvider } from "./context/AuthContext";
+import { NoteContextProvider } from "./context/NotesContext";
   
   const router = createBrowserRouter([
     {
@@ -29,11 +30,13 @@ import {
     return (
       <main className="dark:bg-black min-h-screen">
         <AuthContextProvider>
-        <RouterProvider
-          router={router}
-          fallbackElement={<Loading />
-          }        
-          />
+          <NoteContextProvider>
+            <RouterProvider
+              router={router}
+              fallbackElement={<Loading />
+              }        
+              />
+            </NoteContextProvider>
           </AuthContextProvider>
       </main>
     );

@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AddNoteForm from "./AddNoteForm";
 import NoteSkeleton from "./UI/NoteSkeleton";
+import { NoteContext } from "../context/NotesContext";
 
 const MyDay = () => {
+    const { addedNote, setAddedNote } = useContext(NoteContext);
+
     const [open, setOpen] = useState(null);
-    const [notes, setNotes] = useState([]);
+    const [notes, setNotes] = useState(addedNote);
     const [isLoading, setIsLoading] = useState(true)
+    
 
     console.log(notes)
 
@@ -14,16 +18,19 @@ const MyDay = () => {
         await axios.get('https://react-refresher-e0f10-default-rtdb.firebaseio.com/notes/data.json')
             .then(function (response) {
                 const fetchedNotes = Object.entries(response.data || {}).map(([id, note]) => ({ id, ...note }));
-                setNotes(fetchedNotes);
+                setNotes(prevNotes => ({
+                    ...prevNotes,
+                    fetchedNotes
+                }));
             }).catch((error) => {
                 console.log(error)
             })
         setIsLoading(false)
     }
-
-    fetchData()
-    
-    return (
+    useEffect(() => {
+        fetchData()
+    }, [addedNote]);
+        return (
         <section className="pt-40 2xl:w-8/12 w-10/12 mx-auto">
             <h1 className="lg:text-4xlmd:text-3xl sm:text-2xl text-xl font-bold tracking-wider text-gray-900 mb-6">My Notes for the day!</h1>
             <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
@@ -35,9 +42,9 @@ const MyDay = () => {
                         <span>+</span>
                     </h1>
                 </button>
-                {isLoading && <NoteSkeleton cards={10} />}
-                {notes && <>
-                {Array.isArray(notes) && notes.map((item, i) => (
+                {isLoading && <NoteSkeleton cards={2} />}
+                {notes.fetchedNotes && <>
+                {Array.isArray(notes.fetchedNotes) && notes.fetchedNotes.map((item, i) => (
                  <div
                     key={i} 
                     className="relative w-full p-6 space-y-3 rounded-2xl shadow min-h-[264px]"
@@ -51,7 +58,7 @@ const MyDay = () => {
                     <hr/> 
                     <a role="button" href={`${item?.id}`} className="absolute px-4 py-3 flex justify-center items-center w-fit bottom-6 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-700">
                         Learn More
-                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
                         </svg>
                     </a>
