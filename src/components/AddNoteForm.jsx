@@ -90,9 +90,12 @@ const AddNoteForm = ({ onClose }) => {
                 required
                 className='block px-4 py-3 0 w-full rounded-lg text-gray-800 border border-gray-400 appearance-none outline-none focus:ring-0 focus:border-blue-200'/>          
                 </div>
-                <button aria-label="send your content" class="cursor-pointer w-fit text-nowrap relative z-[2] col-span-2 px-4 py-3 text-gray-800 font-[400] text-center rounded-[8px] shadow-sm bg-blue-200 hover:brightness-125 transition-all duration-400">
+                <div className="col-span-2 w-full space-y-2">
+                <hr/>
+                <button aria-label="send your content" class="cursor-pointer w-fit text-nowrap relative z-[2] px-4 py-3 text-gray-800 font-[400] text-center rounded-[8px] shadow-sm bg-blue-200 hover:brightness-125 transition-all duration-400">
                     {loading === true ?  'Loading...' : 'Add Note'}
-                </button>            
+                    </button>
+                </div>            
             </form>     
         </Popup>
     );

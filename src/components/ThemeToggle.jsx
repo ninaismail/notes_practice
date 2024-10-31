@@ -25,7 +25,7 @@ const ThemeToggle = () => {
     <button
       title={darkMode ? "Dark Mode" : "Light Mode"}
       aria-label={`Click for ${darkMode ? "Dark Mode" : "Light Mode"}`}
-      className="fixed inset-0 z-10 w-12 h-12 p-3 text-center rounded-br-lg shadow-md bg-green-100/95 ring-1 ring-white"
+      className="fixed inset-0 z-1 w-12 h-12 p-3 text-center rounded-br-lg shadow-md bg-green-100/95 ring-1 ring-white"
       onClick={toggleTheme}
     >
       {darkMode ? <LightOn /> : <LightOff />}
