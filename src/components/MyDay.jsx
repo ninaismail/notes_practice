@@ -32,7 +32,7 @@ const MyDay = () => {
                     className="p-6 bg-blue-100 rounded-2xl shadow min-h-[264px]"
                     onClick={() => setOpen(true)}
                 >
-                    <h1 className="grid place-content-center 2xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl text-lg font-bold tracking-tight text-gray-900 rounded-full bg-white transform duration-300 hover:scale-105 px-4 py-3">
+                    <h1 className="grid place-content-center 2xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl text-lg font-bold tracking-tight text-gray-900 rounded-full shadow hover:shadow-2xl bg-white border-white transform duration-300 hover:scale-105 px-4 py-3">
                         <span>+</span>
                     </h1>
                 </button>
