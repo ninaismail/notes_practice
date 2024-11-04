@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useTransition } from "react";
 import Popup from "./UI/Popup"
 import { NoteContext } from "../context/NotesContext";
 
+
 const AddNoteForm = ({ onClose, fetchData }) => {
-    const { notes, setNotes, optimisticNotes, addOptimisticNote} = useContext(NoteContext);
+    const { notes, setNotes, optimisticNotes, addOptimisticNotes } = useContext(NoteContext);
 
     const initialData = {
         title: "",
@@ -11,8 +12,10 @@ const AddNoteForm = ({ onClose, fetchData }) => {
         date: new Date().toISOString().split("T")[0],
         content: "",
     };
+
     const [formData, setFormData] = useState(initialData);
-    const [loading, setLoading] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [isPending, startTransition] = useTransition();
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -34,7 +37,21 @@ const AddNoteForm = ({ onClose, fetchData }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
+
+        const myOptimisticNote = {
+            title: formData.title,
+            slug: formData.slug,
+            date: formData.date,
+            content: formData.content,
+        };
+
+        // Optimistic state update for the notes
+        startTransition(() => {
+            addOptimisticNotes(prev => ({
+                ...prev,
+                myOptimisticNote
+            }));
+        });
 
         const axios = (await import("axios")).default;
         const data = {
@@ -43,26 +60,34 @@ const AddNoteForm = ({ onClose, fetchData }) => {
             date: formData.date,
             content: formData.content,                
         };
-        await axios.post('https://react-refresher-e0f10-default-rtdb.firebaseio.com/notes/data.json', data)
-            .then(function (response) {
-                console.log(response.data);
-                setFormData(initialData);
-                const note = Object.entries(response.data || {}).map(([id, note]) => ({ id, ...note }));
-                addOptimisticNote(prev => ({
+
+        try {
+            const response = await axios.post('https://react-refresher-e0f10-default-rtdb.firebaseio.com/notes/data.json', data);
+            console.log(response.data);
+            setFormData(initialData);
+            
+            // Fetch the new note from the response
+            const newNote = { id: response.data.name, ...data }; // Adjust as necessary based on the response structure
+
+            // Optimistically add the new note to the context
+            startTransition(() => {
+                addOptimisticNotes(prev => ({
                     ...prev,
-                    note
+                    newNote
                 }));
                 setNotes(prev => ({
                     ...prev,
-                    note
+                    newNote
                 }));
+            });
 
-            }).catch((error) => {
-                console.log(error)
-            })
-        setLoading(false);
-        // Fetch the updated notes after successfully adding a new one
-        await fetchData();
+            // Fetch the updated notes after successfully adding a new one
+            await fetchData();
+        } catch (error) {
+            console.log(error);
+        }
+
+       onClose(); // Close the form/modal after submission
     };
 
     return (
@@ -108,7 +133,7 @@ const AddNoteForm = ({ onClose, fetchData }) => {
                 <div className="col-span-2 w-full space-y-2">
                 <hr/>
                 <button aria-label="send your content" class="cursor-pointer w-fit text-nowrap relative z-[2] px-4 py-3 text-gray-800 font-[400] text-center rounded-[8px] shadow-sm bg-blue-200 hover:brightness-125 transition-all duration-400">
-                    {loading === true ?  'Loading...' : 'Add Note'}
+                    {isPending ?  'Pending...' : 'Add Note'}
                     </button>
                 </div>            
             </form>     

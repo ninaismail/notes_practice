@@ -4,14 +4,9 @@ export const NoteContext = createContext([])
 
 export const NoteContextProvider = ({ children }) => {
     const [ notes, setNotes ] = useState([]);
-    const [optimisticNotes, addOptimisticNote] = useOptimistic(
-      notes,
-      (state, newNote) => {
-          return [state, newNote];
-      }
-    );
+    const [optimisticNotes, addOptimisticNotes] = useOptimistic(notes);
   return (
-    <NoteContext.Provider value={{ notes, setNotes, optimisticNotes, addOptimisticNote }}>
+    <NoteContext.Provider value={{ notes, setNotes, optimisticNotes, addOptimisticNotes }}>
       {children}
     </NoteContext.Provider>
   )

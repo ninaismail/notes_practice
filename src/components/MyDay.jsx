@@ -4,7 +4,7 @@ import NoteSkeleton from "./UI/NoteSkeleton";
 import { NoteContext } from "../context/NotesContext";
 
 const MyDay = () => {
-    const { notes, setNotes, optimisticNotes, addOptimisticNote} = useContext(NoteContext);
+    const { notes, setNotes, optimisticNotes, addOptimisticNotes} = useContext(NoteContext);
 
     const [open, setOpen] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
