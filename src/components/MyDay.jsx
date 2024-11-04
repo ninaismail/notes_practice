@@ -4,12 +4,10 @@ import NoteSkeleton from "./UI/NoteSkeleton";
 import { NoteContext } from "../context/NotesContext";
 
 const MyDay = () => {
-    const { addedNote, setAddedNote } = useContext(NoteContext);
+    const { notes, setNotes, optimisticNotes, addOptimisticNote} = useContext(NoteContext);
 
     const [open, setOpen] = useState(null);
-    const [notes, setNotes] = useState(addedNote);
     const [isLoading, setIsLoading] = useState(true)
-    
 
     console.log(notes)
 
@@ -18,8 +16,8 @@ const MyDay = () => {
         await axios.get('https://react-refresher-e0f10-default-rtdb.firebaseio.com/notes/data.json')
             .then(function (response) {
                 const fetchedNotes = Object.entries(response.data || {}).map(([id, note]) => ({ id, ...note }));
-                setNotes(prevNotes => ({
-                    ...prevNotes,
+                setNotes(prev => ({
+                    ...prev,
                     fetchedNotes
                 }));
             }).catch((error) => {
@@ -29,7 +27,7 @@ const MyDay = () => {
     }
     useEffect(() => {
         fetchData()
-    }, [addedNote]);
+    }, [addOptimisticNote]);
         return (
         <section className="pt-40 2xl:w-8/12 w-10/12 mx-auto">
             <h1 className="lg:text-4xlmd:text-3xl sm:text-2xl text-xl font-bold tracking-wider text-gray-900 mb-6">My Notes for the day!</h1>
@@ -43,8 +41,8 @@ const MyDay = () => {
                     </h1>
                 </button>
                 {isLoading && <NoteSkeleton cards={2} />}
-                {notes.fetchedNotes && <>
-                {Array.isArray(notes.fetchedNotes) && notes.fetchedNotes.map((item, i) => (
+                {optimisticNotes.fetchedNotes && <>
+                {Array.isArray(optimisticNotes.fetchedNotes) && optimisticNotes.fetchedNotes.map((item, i) => (
                  <div
                     key={i} 
                     className="relative w-full p-6 space-y-3 rounded-2xl shadow min-h-[264px]"

@@ -3,7 +3,7 @@ import Popup from "./UI/Popup"
 import { NoteContext } from "../context/NotesContext";
 
 const AddNoteForm = ({ onClose }) => {
-    const {addedNote, setAddedNote} = useContext(NoteContext);
+    const { notes, setNotes, optimisticNotes, addOptimisticNote} = useContext(NoteContext);
 
     const initialData = {
         title: "",
@@ -47,8 +47,15 @@ const AddNoteForm = ({ onClose }) => {
             .then(function (response) {
                 console.log(response.data);
                 setFormData(initialData);
-                const fetchedNotes = Object.entries(response.data || {}).map(([id, note]) => ({ id, ...note }));
-                setAddedNote(fetchedNotes);
+                const note = Object.entries(response.data || {}).map(([id, note]) => ({ id, ...note }));
+                addOptimisticNote(prev => ({
+                    ...prev,
+                    note
+                }));
+                setNotes(prev => ({
+                    ...prev,
+                    note
+                }));
             }).catch((error) => {
                 console.log(error)
             })
