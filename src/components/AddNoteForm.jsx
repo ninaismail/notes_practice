@@ -112,7 +112,7 @@ const AddNoteForm = ({ onClose, fetchData }) => {
                 </div>
                 <div className="col-span-2 w-full space-y-2">
                 <hr/>
-                <button aria-label="send your content" class="cursor-pointer w-fit text-nowrap relative z-[2] px-4 py-3 text-gray-800 font-[400] text-center rounded-[8px] shadow-sm bg-blue-200 hover:brightness-125 transition-all duration-400">
+                <button aria-label="send your content" className="cursor-pointer w-fit text-nowrap relative z-[2] px-4 py-3 text-gray-800 font-[400] text-center rounded-[8px] shadow-sm bg-blue-200 hover:brightness-125 transition-all duration-400">
                     {loading === true ?  'Loading...' : 'Add Note'}
                     </button>
                 </div>            
