@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import Popup from "./UI/Popup"
 import { NoteContext } from "../context/NotesContext";
 
-const AddNoteForm = ({ onClose }) => {
+const AddNoteForm = ({ onClose, fetchData }) => {
     const { notes, setNotes, optimisticNotes, addOptimisticNote} = useContext(NoteContext);
 
     const initialData = {
@@ -56,10 +56,13 @@ const AddNoteForm = ({ onClose }) => {
                     ...prev,
                     note
                 }));
+
             }).catch((error) => {
                 console.log(error)
             })
         setLoading(false);
+        // Fetch the updated notes after successfully adding a new one
+        await fetchData();
     };
 
     return (

@@ -26,8 +26,8 @@ const MyDay = () => {
         setIsLoading(false)
     }
     useEffect(() => {
-        fetchData()
-    }, [addOptimisticNote]);
+        fetchData(); // Fetch notes on component mount
+    }, []);
         return (
         <section className="pt-40 2xl:w-8/12 w-10/12 mx-auto">
             <h1 className="lg:text-4xlmd:text-3xl sm:text-2xl text-xl font-bold tracking-wider text-gray-900 mb-6">My Notes for the day!</h1>
@@ -65,7 +65,7 @@ const MyDay = () => {
                 </>}
             </div>
             {open === true ? (
-                <AddNoteForm onClose={() => setOpen(false)} />
+                <AddNoteForm onClose={() => setOpen(false)} fetchData={fetchData}/>
             ) : (
                 ""
             )}
